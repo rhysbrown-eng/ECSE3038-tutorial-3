@@ -10,18 +10,6 @@ readings = [
     {"name": "patio",      "room": "outside", "temp": 29.8, "online": True},
 ]
 
-def hottest(devices):
-    #return the whole dictionary of the hottest device
-    max_idx = 0
-    i=0
-
-    for device in devices:
-        if device["temp"] > devices[max_idx]["temp"]: max_idx = i
-        i+=1
-
-    return devices[max_idx]
-
-
 def average_temp(devices):
     #returns the average temperature
 
@@ -38,3 +26,15 @@ def average_temp(devices):
 @app.get("/devices")
 def list_devices():
     return readings
+
+@app.get("/devices/hottest")
+def hottest():
+    #return the whole dictionary of the hottest device
+    max_idx = 0
+    i=0
+
+    for device in readings:
+        if device["temp"] > readings[max_idx]["temp"]: max_idx = i
+        i+=1
+
+    return readings[max_idx]
