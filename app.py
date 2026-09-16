@@ -33,3 +33,8 @@ def average_temp(devices):
         i += 1
 
     return sum/i
+
+
+@app.get("/devices")
+def list_devices():
+    return readings
