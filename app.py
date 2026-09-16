@@ -38,3 +38,10 @@ def hottest():
         i+=1
 
     return readings[max_idx]
+
+@app.get("/devices/online")
+def list_online_devices():
+    online_devices = []
+    for device in readings:
+        if device["online"] == True: online_devices.append(device)
+    return online_devices
