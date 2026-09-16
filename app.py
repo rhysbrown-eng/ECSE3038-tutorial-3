@@ -45,3 +45,12 @@ def list_online_devices():
     for device in readings:
         if device["online"] == True: online_devices.append(device)
     return online_devices
+
+@app.get("/devices/{reading_name}") #entry point
+async def get_single_readings(reading_name):
+    for reading in readings:
+        if reading["name"] == reading_name: return reading
+
+    raise HTTPException(status_code=404, detail="No device called " + reading_name) 
+    #exceptions are bad, they must come when the user enters unexpected info.
+
