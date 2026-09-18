@@ -54,3 +54,6 @@ async def get_single_readings(reading_name):
     raise HTTPException(status_code=404, detail="No device called " + reading_name) 
     #exceptions are bad, they must come when the user enters unexpected info.
 
+@app.get("/stats") 
+async def get_average_readings():
+    return {"average_temperature": average_temp(readings)}
