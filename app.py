@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, status
 
 app = FastAPI()
 
@@ -57,3 +57,8 @@ async def get_single_readings(reading_name):
 @app.get("/stats") 
 async def get_average_readings():
     return {"average_temperature": average_temp(readings)}
+
+@app.post("/devices", status_code=status.HTTP_201_CREATED)
+async def create_new_device(reading: dict):
+    readings.append(reading)
+    return reading
