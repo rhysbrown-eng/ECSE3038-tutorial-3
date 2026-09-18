@@ -56,9 +56,18 @@ async def get_single_readings(reading_name):
 
 @app.get("/stats") 
 async def get_average_readings():
-    return {"average_temperature": average_temp(readings)}
+    return {"average_temperature": round(average_temp(readings), 2)}
 
 @app.post("/devices", status_code=status.HTTP_201_CREATED)
 async def create_new_device(reading: dict):
     readings.append(reading)
     return reading
+
+@app.get("/rooms/{room}/devices")
+async def devices_by_room(room):
+
+    if len([reading for reading in readings if reading["room"]==room]) == 0:
+        raise HTTPException(status_code=404, detail="No room called " + room)
+    room_readings = [reading for reading in readings if reading["room"]==room]
+    return room_readings
+    
